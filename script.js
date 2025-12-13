@@ -132,7 +132,7 @@ async function renderForex() {
 }
 
 async function loadDashboard() {
-  lastUpdateEl.textContent = `Senast uppdaterad: ${new Date().toLocaleTimeString('sv-SE')}`;
+  lastUpdateEl.textContent = `Latest updated: ${new Date().toLocaleTimeString('en-GB')}`;
 
   // Skapa cards FÖRST
   if (!document.getElementById('stocks-container')) createCard('Stocks & Crypto', 'stocks-container');
@@ -150,6 +150,7 @@ refreshBtn.addEventListener('click', () => {
 });
 
 setInterval(loadDashboard, 10 * 60 * 1000);
+
 
 
 
