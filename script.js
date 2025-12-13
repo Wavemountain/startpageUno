@@ -5,16 +5,24 @@ const refreshBtn = document.getElementById('refresh');
 const darkmodeBtn = document.getElementById('darkmode');
 const lastUpdateEl = document.getElementById('last-update');
 
-// Dark mode toggle
+// Dark mode default
+document.body.classList.add('dark');
+darkmodeBtn.textContent = '☀️';
+
 darkmodeBtn.addEventListener('click', () => {
   document.body.classList.toggle('dark');
-  darkmodeBtn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
-  localStorage.setItem('darkMode', document.body.classList.contains('dark'));
+  if (document.body.classList.contains('dark')) {
+    darkmodeBtn.textContent = '☀️';
+    localStorage.setItem('darkMode', 'true');
+  } else {
+    darkmodeBtn.textContent = '🌙';
+    localStorage.setItem('darkMode', 'false');
+  }
 });
 
-if (localStorage.getItem('darkMode') === 'true') {
-  document.body.classList.add('dark');
-  darkmodeBtn.textContent = '☀️';
+if (localStorage.getItem('darkMode') === 'false') {
+  document.body.classList.remove('dark');
+  darkmodeBtn.textContent = '🌙';
 }
 
 function formatNumber(num) {
@@ -127,8 +135,8 @@ async function loadDashboard() {
   lastUpdateEl.textContent = `Senast uppdaterad: ${new Date().toLocaleTimeString('sv-SE')}`;
 
   // Skapa cards FÖRST
-  if (!document.getElementById('stocks-container')) createCard('Aktier & Krypto', 'stocks-container');
-  if (!document.getElementById('forex-container')) createCard('Valutakurser', 'forex-container');
+  if (!document.getElementById('stocks-container')) createCard('Stocks & Crypto', 'stocks-container');
+  if (!document.getElementById('forex-container')) createCard('Currency Rates', 'forex-container');
 
   // Sen rendera data
   await Promise.all([renderStocksAndCrypto(), renderForex()]);
@@ -142,4 +150,5 @@ refreshBtn.addEventListener('click', () => {
 });
 
 setInterval(loadDashboard, 10 * 60 * 1000);
+
 
