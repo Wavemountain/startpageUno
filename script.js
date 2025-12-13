@@ -62,8 +62,11 @@ async function renderStocks() {
 
   let data = MOCK_STOCKS; // Default mock
   try {
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/'; // CORS-proxy
     const promises = STOCKS.map(async (item) => {
-      const res = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${item.symbol}?range=1d&includePrePost=false&interval=1d`);
+      const url = `${proxyUrl}https://query1.finance.yahoo.com/v8/finance/chart/${item.symbol}?range=1d&includePrePost=false&interval=1d`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('Proxy/API error');
       const json = await res.json();
       const meta = json.chart.result[0].meta;
       const price = meta.regularMarketPrice || meta.previousClose;
@@ -156,3 +159,4 @@ refreshBtn.addEventListener('click', () => {
 });
 
 setInterval(loadDashboard, 10 * 60 * 1000);
+
