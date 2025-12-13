@@ -97,7 +97,7 @@ async function renderForex() {
     if (cached && Date.now() - JSON.parse(cached).timestamp < CACHE_TIME) {
       rates = JSON.parse(cached).rates;
     } else {
-      const res = await fetch('https://api.frankfurter.dev/latest?from=EUR');
+      const res = await fetch('https://api.frankfurter.app/latest');
       const json = await res.json();
       rates = json.rates;
       localStorage.setItem('frankfurter_latest', JSON.stringify({ rates, timestamp: Date.now() }));
@@ -142,3 +142,4 @@ refreshBtn.addEventListener('click', () => {
 });
 
 setInterval(loadDashboard, 10 * 60 * 1000);
+
