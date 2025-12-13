@@ -11,6 +11,12 @@ body {
   justify-content: center;
 }
 
+h2 {
+  margin: 2rem 0 1rem;
+  font-size: 1.8rem;
+  text-align: center;
+}
+
 #clock {
   font-size: 8rem;
   font-weight: 300;
@@ -87,3 +93,4 @@ body {
   #search-input { width: 80vw; }
   #stocks-container { gap: 1rem; }
 }
+
