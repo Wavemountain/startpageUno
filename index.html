@@ -1,29 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Financial Dashboard</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%2250%22 font-size=%2290%22>%F0%9F%94%B4</text></svg>" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StartpageUno</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- För framtida grafer -->
 </head>
 <body>
-  <header>
-    <h1>Financial Dashboard</h1>
-    <div class="controls">
-      <button id="refresh">↻ Refresh Now</button>
-      <button id="darkmode">☀️/🌙</button>
-      <span id="last-update"></span>
-    </div>
-  </header>
+  <div id="clock"></div>
+  <div id="date"></div>
 
-  <main class="grid">
-    <!-- Cards created by JS -->
-  </main>
+  <form id="search-form">
+    <input type="text" id="search-input" placeholder="Sök på Google..." autocomplete="off" autofocus />
+  </form>
 
-  <script type="module" src="config.js"></script>
-  <script type="module" src="script.js"></script>
+  <div id="stocks-container"></div>
+
+  <script src="script.js"></script>
 </body>
 </html>
-
