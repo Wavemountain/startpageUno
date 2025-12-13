@@ -1,17 +1,14 @@
-/* style.css - Oförändrad design + förbättrade aktier */
+/* style.css - Clean design utan bakgrundsbild */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: #0f0f0f;
+  background: #0f0f0f; /* Solid mörk bakgrund */
   color: #fff;
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-image: url('background.jpg');
-  background-size: cover;
-  background-position: center;
 }
 
 #clock {
