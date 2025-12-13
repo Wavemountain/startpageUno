@@ -37,7 +37,7 @@ function formatChange(pct) {
 function createCard(title, id) {
   const card = document.createElement('div');
   card.className = 'card';
-  card.innerHTML = `<h2>${title}</h2><div id="${id}" class="loading">Laddar...</div>`;
+  card.innerHTML = `<h2>${title}</h2><div id="${id}" class="loading">Loading...</div>`;
   main.appendChild(card);
 }
 
@@ -55,7 +55,7 @@ async function renderStocksAndCrypto() {
   let container = document.getElementById('stocks-container');
   if (!container) return; // Vänta på card
 
-  container.innerHTML = '<p class="loading">Laddar aktier & krypto...</p>';
+  container.innerHTML = '<p class="loading">Loading stocks & Crypto...</p>';
 
   let data = { prices: MOCK_CRYPTO }; // Default mock
   try {
@@ -97,7 +97,7 @@ async function renderForex() {
   let container = document.getElementById('forex-container');
   if (!container) return; // Vänta på card
 
-  container.innerHTML = '<p class="loading">Laddar valutakurser...</p>';
+  container.innerHTML = '<p class="loading">Loading exchange rates...</p>';
 
   let rates = null;
   try {
@@ -150,5 +150,6 @@ refreshBtn.addEventListener('click', () => {
 });
 
 setInterval(loadDashboard, 10 * 60 * 1000);
+
 
 
