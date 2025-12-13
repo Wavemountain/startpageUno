@@ -1,9 +1,12 @@
-// Inga API-keys behövs!
+// No API keys needed!
 
-export const STOCKS_AND_CRYPTO = [
-  { id: 'tesla', name: 'Tesla (TSLA)' },
-  { id: 'apple', name: 'Apple (AAPL)' },
-  { id: 'nvidia', name: 'Nvidia (NVDA)' },
+export const STOCKS = [
+  { symbol: 'TSLA', name: 'Tesla (TSLA)' },
+  { symbol: 'AAPL', name: 'Apple (AAPL)' },
+  { symbol: 'NVDA', name: 'Nvidia (NVDA)' }
+];
+
+export const CRYPTO = [
   { id: 'bitcoin', name: 'Bitcoin (BTC)' },
   { id: 'ethereum', name: 'Ethereum (ETH)' },
   { id: 'solana', name: 'Solana (SOL)' }
@@ -17,4 +20,4 @@ export const FOREX_PAIRS = [
   { from: 'EUR', to: 'USD', label: 'EUR/USD' }
 ];
 
-export const CACHE_TIME = 5 * 60 * 1000; // <-- MÅSTE HA export HÄR!
+export const CACHE_TIME = 5 * 60 * 1000; // 5 min cache
