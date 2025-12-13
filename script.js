@@ -33,7 +33,7 @@ function createCard(title, id) {
   main.appendChild(card);
 }
 
-// Mock-data fallback
+// Mock-data (visas alltid om API failar)
 const MOCK_CRYPTO = {
   tesla: { usd: 350.24, usd_24h_change: 2.45 },
   apple: { usd: 228.50, usd_24h_change: -0.80 },
@@ -44,7 +44,9 @@ const MOCK_CRYPTO = {
 };
 
 async function renderStocksAndCrypto() {
-  const container = document.getElementById('stocks-container') || createCard('Aktier & Krypto', 'stocks-container').querySelector('#stocks-container');
+  let container = document.getElementById('stocks-container');
+  if (!container) return; // Vänta på card
+
   container.innerHTML = '<p class="loading">Laddar aktier & krypto...</p>';
 
   let data = { prices: MOCK_CRYPTO }; // Default mock
@@ -69,36 +71,24 @@ async function renderStocksAndCrypto() {
     const coin = data.prices[item.id];
     if (coin) {
       const change = coin.usd_24h_change || 0;
-
       const itemEl = document.createElement('div');
       itemEl.className = 'item';
-
-      const symbolDiv = document.createElement('div');
-      symbolDiv.className = 'symbol';
-      symbolDiv.textContent = item.name;
-
-      const rightDiv = document.createElement('div');
-      rightDiv.style.textAlign = 'right';
-
-      const priceDiv = document.createElement('div');
-      priceDiv.className = 'price';
-      priceDiv.textContent = `$${formatNumber(coin.usd)}`;
-
-      const changeDiv = document.createElement('div');
-      changeDiv.className = `change ${change >= 0 ? 'positive' : 'negative'}`;
-      changeDiv.textContent = formatChange(change);
-
-      rightDiv.appendChild(priceDiv);
-      rightDiv.appendChild(changeDiv);
-      itemEl.appendChild(symbolDiv);
-      itemEl.appendChild(rightDiv);
+      itemEl.innerHTML = `
+        <div class="symbol">${item.name}</div>
+        <div style="text-align: right;">
+          <div class="price">$${formatNumber(coin.usd)}</div>
+          <div class="change ${change >= 0 ? 'positive' : 'negative'}">${formatChange(change)}</div>
+        </div>
+      `;
       container.appendChild(itemEl);
     }
   });
 }
 
 async function renderForex() {
-  const container = document.getElementById('forex-container') || createCard('Valutakurser', 'forex-container').querySelector('#forex-container');
+  let container = document.getElementById('forex-container');
+  if (!container) return; // Vänta på card
+
   container.innerHTML = '<p class="loading">Laddar valutakurser...</p>';
 
   let rates = null;
@@ -119,30 +109,28 @@ async function renderForex() {
   container.innerHTML = '';
   FOREX_PAIRS.forEach(pair => {
     if (!rates) return;
-    let rate = 0;
-    if (pair.from === 'EUR') rate = rates[pair.to] || 0;
-    else if (pair.to === 'EUR') rate = 1 / (rates[pair.from] || 1);
-    else rate = (rates[pair.to] || 0) / (rates[pair.from] || 1);
+    let rate = pair.from === 'EUR' ? rates[pair.to] || 0 :
+               pair.to === 'EUR' ? 1 / (rates[pair.from] || 1) :
+               (rates[pair.to] || 0) / (rates[pair.from] || 1);
 
     const itemEl = document.createElement('div');
     itemEl.className = 'item';
-
-    const symbolDiv = document.createElement('div');
-    symbolDiv.className = 'symbol';
-    symbolDiv.textContent = pair.label;
-
-    const priceDiv = document.createElement('div');
-    priceDiv.className = 'price';
-    priceDiv.textContent = rate > 0 ? formatNumber(rate) : '—';
-
-    itemEl.appendChild(symbolDiv);
-    itemEl.appendChild(priceDiv);
+    itemEl.innerHTML = `
+      <div class="symbol">${pair.label}</div>
+      <div class="price">${rate > 0 ? formatNumber(rate) : '—'}</div>
+    `;
     container.appendChild(itemEl);
   });
 }
 
 async function loadDashboard() {
   lastUpdateEl.textContent = `Senast uppdaterad: ${new Date().toLocaleTimeString('sv-SE')}`;
+
+  // Skapa cards FÖRST
+  if (!document.getElementById('stocks-container')) createCard('Aktier & Krypto', 'stocks-container');
+  if (!document.getElementById('forex-container')) createCard('Valutakurser', 'forex-container');
+
+  // Sen rendera data
   await Promise.all([renderStocksAndCrypto(), renderForex()]);
 }
 
