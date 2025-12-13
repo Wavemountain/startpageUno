@@ -17,4 +17,4 @@ export const FOREX_PAIRS = [
   { from: 'EUR', to: 'USD', label: 'EUR/USD' }
 ];
 
-export const CACHE_TIME = 5 * 60 * 1000; // 5 minuter cache
+export const CACHE_TIME = 5 * 60 * 1000; // <-- MÅSTE HA export HÄR!
